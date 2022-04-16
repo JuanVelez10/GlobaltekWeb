@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static Web.Models.Enums;
+using static Domain.Enums.Enums;
 
-namespace Web.Models
+namespace Domain.Entities
 {
     public class Person
     {

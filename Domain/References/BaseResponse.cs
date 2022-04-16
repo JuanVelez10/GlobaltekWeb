@@ -1,6 +1,6 @@
-﻿using static Web.Models.Enums;
+﻿using static Domain.Enums.Enums;
 
-namespace Web.Models
+namespace Domain.References
 {
     public class BaseResponse<T>
     {

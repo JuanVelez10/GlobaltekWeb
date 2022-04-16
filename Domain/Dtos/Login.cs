@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models
+namespace Domain.Dtos
 {
     public class Login
     {

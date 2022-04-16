@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models
+namespace Domain.Entities
 {
     public class BillBasic
     {

@@ -1,4 +1,4 @@
-namespace Web.Models
+namespace Domain.References
 {
     public class ErrorViewModel
     {

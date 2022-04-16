@@ -1,20 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Application.Interfaces;
+using Domain.References;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Web.Manager;
-using Web.Models;
+
 
 namespace Web.Controllers
 {
     public class GlobaltekController : Controller
     {
         private readonly ILogger<GlobaltekController> _logger;
-        private BillManager billManager;
+        private readonly IBillServices billServices;
 
-        public GlobaltekController(ILogger<GlobaltekController> logger)
+        public GlobaltekController(ILogger<GlobaltekController> logger, IBillServices billServices)
         {
             _logger = logger;
-            billManager = new BillManager();
+            this.billServices = billServices;
         }
 
         public IActionResult Login(string loginError)
@@ -30,21 +30,18 @@ namespace Web.Controllers
             var session = ControllerContext.HttpContext.Request.Cookies.Where(x => x.Key == "token").FirstOrDefault().Value;
 
             var token = string.Empty;
+
             if (string.IsNullOrEmpty(session))
             {
-                token = billManager.VefirySession(login);
+                token = billServices.VefirySession(login);
                 if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Globaltek", routeValues: new { loginError = "Wrong email or password" });
                 ControllerContext.HttpContext.Response.Cookies.Append("token", token);
             }
 
-            var listProduct = billManager.GetAllBill(token);
+            var listProduct = billServices.GetAllBill(token);
 
             return View(listProduct);
         }
-
-
-
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -52,5 +49,7 @@ namespace Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }
