@@ -5,7 +5,6 @@ namespace Application.Interfaces
 {
     public interface IBillServices
     {
-        string VefirySession(LoginRequest loginRequest);
         List<BillBasic> GetAllBill(string token);
 
     }

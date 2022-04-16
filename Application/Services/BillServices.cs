@@ -21,42 +21,9 @@ namespace Application.Services
             this.apiServices = apiServices;
         }
 
-        public string VefirySession(LoginRequest loginRequest)
-        {
-            var response = new BaseResponse<Login>();
-
-            try
-            {
-                var json = JsonConvert.SerializeObject(loginRequest);
-                response = JsonConvert.DeserializeObject<BaseResponse<Login>>(apiServices.ApiPost(json, "Person/Login"));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-
-            if (response == null) return string.Empty;
-            if (response.Data == null) return string.Empty;
-            return response.Data.Token;
-
-        }
-
         public List<BillBasic> GetAllBill(string token)
         {
-            List<BillBasic> billBasics = new List<BillBasic>();
-
-            try
-            {
-                billBasics = JsonConvert.DeserializeObject<List<BillBasic>>(apiServices.ApiGet(token, "Bill"));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-            return billBasics;
-
+            return JsonConvert.DeserializeObject<List<BillBasic>>(apiServices.ApiGet(token, "Bill"));
         }
 
     }

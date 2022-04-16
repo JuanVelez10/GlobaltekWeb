@@ -17,6 +17,7 @@ namespace Application
         {
             services.Configure<Api>(configuration.GetSection("Api"));
             services.AddTransient<IBillServices, BillServices>();
+            services.AddTransient<IPersonServices, PersonServices>();
             services.AddTransient<IApiServices, ApiServices>();
             return services;
         }

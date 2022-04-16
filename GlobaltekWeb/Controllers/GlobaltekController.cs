@@ -10,11 +10,13 @@ namespace Web.Controllers
     {
         private readonly ILogger<GlobaltekController> _logger;
         private readonly IBillServices billServices;
+        private readonly IPersonServices personServices;
 
-        public GlobaltekController(ILogger<GlobaltekController> logger, IBillServices billServices)
+        public GlobaltekController(ILogger<GlobaltekController> logger, IBillServices billServices, IPersonServices personServices)
         {
             _logger = logger;
             this.billServices = billServices;
+            this.personServices = personServices;
         }
 
         public IActionResult Login(string loginError)
@@ -33,7 +35,7 @@ namespace Web.Controllers
 
             if (string.IsNullOrEmpty(session))
             {
-                token = billServices.VefirySession(login);
+                token = personServices.VefirySession(login);
                 if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Globaltek", routeValues: new { loginError = "Wrong email or password" });
                 ControllerContext.HttpContext.Response.Cookies.Append("token", token);
             }
