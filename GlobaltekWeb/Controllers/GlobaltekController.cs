@@ -27,22 +27,29 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Home(LoginRequest login = null, int idCategory = 0)
+        public IActionResult Home(LoginRequest login = null)
         {
             var session = ControllerContext.HttpContext.Request.Cookies.Where(x => x.Key == "token").FirstOrDefault().Value;
 
-            var token = string.Empty;
-
             if (string.IsNullOrEmpty(session))
             {
-                token = personServices.VefirySession(login);
-                if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Globaltek", routeValues: new { loginError = "Wrong email or password" });
-                ControllerContext.HttpContext.Response.Cookies.Append("token", token);
+                session = personServices.VefirySession(login);
+                if (string.IsNullOrEmpty(session)) return RedirectToAction("Login", "Globaltek", routeValues: new { loginError = "Wrong email or password" });
+                ControllerContext.HttpContext.Response.Cookies.Append("token", session);
             }
 
-            var listProduct = billServices.GetAllBill(token);
+            var listProduct = billServices.GetAllBill(session);
 
             return View(listProduct);
+        }
+
+
+        public IActionResult Details(Guid? id)
+        {
+            var session = ControllerContext.HttpContext.Request.Cookies.Where(x => x.Key == "token").FirstOrDefault().Value;
+            if (string.IsNullOrEmpty(session)) return RedirectToAction("Login", "Globaltek", routeValues: new { loginError = "You are not logged in" });
+            var billInfo = billServices.GetBillInfo(session, id);
+            return View(billInfo);
         }
 
 

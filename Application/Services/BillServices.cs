@@ -26,5 +26,10 @@ namespace Application.Services
             return JsonConvert.DeserializeObject<List<BillBasic>>(apiServices.ApiGet(token, "Bill"));
         }
 
+        public BillInfo GetBillInfo(string token, Guid? id)
+        {
+            return JsonConvert.DeserializeObject<BillInfo>(apiServices.ApiGet(token, "Bill/" + id));
+        }
+
     }
 }
