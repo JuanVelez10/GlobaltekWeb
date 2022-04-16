@@ -5,85 +5,126 @@
 }
 
 <div>
-    <h4>Invoce Details</h4>
+    <h4>Invoce</h4>
 
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Number)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Number)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Date)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NamePerson)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NamePerson)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DocumenPerson)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DocumenPerson)
         </dd>
 
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PaymentType)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PaymentType)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.SubTotal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SubTotal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayName("Discount")
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Discount.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DiscountTotal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DiscountTotal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayName("Tax")
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tax.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TaxTotal)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TaxTotal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Total)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Total)
         </dd>
 
     </dl>
+
+    <h4>Details</h4>
+    @if (Model.BillDetails != null)
+    {
+        @foreach (var item in Model.BillDetails)
+        {
+            <h5>Product</h5>
+            <dl class="row">
+
+                <dt class="col-sm-2">
+                    @Html.DisplayName("Id")
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayName(item.Id.ToString())
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayName("Product Name")
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayName(item.NameProduct)
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayName("Amount")
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayName(item.Amount.ToString())
+                </dd>
+
+                <dt class="col-sm-2">
+                    @Html.DisplayName("Unit Cost")
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayName(item.UnitCost.ToString())
+                </dd>
+
+            </dl>
+        }
+    }
+
 </div>
 
 
