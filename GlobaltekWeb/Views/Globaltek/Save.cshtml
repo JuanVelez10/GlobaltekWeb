@@ -13,86 +13,90 @@
 
         <img src="/image/Logo.png" class="Logo">
 
-        <h4 class="whiteText">@ViewBag.save Invoce</h4>
-        <hr />
+        <div id="SaveDate">
+            <h4 class="whiteText">@ViewBag.save Invoce</h4>
+            <hr />
 
-        <div class="control-label @ViewBag.hide">
-            <h6 class="col-md-12"> <B>Id:</B> @Model.Id </h6>
-            <h6 class="col-md-12"> <B>Number:</B> @Model.Number</h6>
-            <h6 class="col-md-12"> <B>SubTotal:</B> @Model.SubTotal</h6>
-            <h6 class="col-md-12"> <B>Discount:</B> @Model.DiscountTotal</h6>
-            <h6 class="col-md-12"> <B>Tax:</B> @Model.TaxTotal</h6>
-            <h6 class="col-md-12"> <B>Total:</B> @Model.Total</h6>
-        </div>
+            <div class="control-label @ViewBag.hide">
+                <h6 class="col-md-12"> <B>Id:</B> @Model.Id </h6>
+                <h6 class="col-md-12"> <B>Number:</B> @Model.Number</h6>
+                <h6 class="col-md-12"> <B>SubTotal:</B> @Model.SubTotal</h6>
+                <h6 class="col-md-12"> <B>Discount:</B> @Model.DiscountTotal</h6>
+                <h6 class="col-md-12"> <B>Tax:</B> @Model.TaxTotal</h6>
+                <h6 class="col-md-12"> <B>Total:</B> @Model.Total</h6>
+            </div>
 
-        <div class="form-group">
-            <label class="control-label">Date</label>
-            <input id="Date" type="date" class="form-control textData" min="@DateTime.Now.ToString("yyyyy-MM-dd")" value="@DateTime.Now.ToString("yyyyy-MM-dd")" />
-        </div>
+            <div class="form-group">
+                <label class="control-label">Date</label>
+                <input id="Date" type="date" class="form-control textData" min="@DateTime.Now.ToString("yyyyy-MM-dd")" value="@DateTime.Now.ToString("yyyyy-MM-dd")" />
+            </div>
 
-        <div class="form-group">
-            <label class="control-label">Payment</label>
-            @Html.DropDownList("PaymentType", (IEnumerable<SelectListItem>)ViewBag.listPaymentType, htmlAttributes: new { @class = "form-control textData" })
-        </div>
+            <div class="form-group">
+                <label class="control-label">Payment</label>
+                @Html.DropDownList("PaymentType", (IEnumerable<SelectListItem>)ViewBag.listPaymentType, htmlAttributes: new { @class = "form-control textData" })
+            </div>
 
-        <div class="form-group">
-            <label class="control-label">Person</label>
-            @Html.DropDownList("PersonId", (IEnumerable<SelectListItem>)ViewBag.listPerson, htmlAttributes: new { @class = "form-control textData" })
-        </div>
+            <div class="form-group">
+                <label class="control-label">Person</label>
+                @Html.DropDownList("PersonId", (IEnumerable<SelectListItem>)ViewBag.listPerson, htmlAttributes: new { @class = "form-control textData" })
+            </div>
 
-        <div class="form-group">
-            <label class="control-label">Tax</label>
-            @Html.DropDownList("TaxId", (IEnumerable<SelectListItem>)ViewBag.listTaxes, htmlAttributes: new { @class = "form-control textData" })
-        </div>
-        <div class="form-group">
-            <label class="control-label">DiscountId</label>
-            @Html.DropDownList("DiscountId", (IEnumerable<SelectListItem>)ViewBag.listDiscounts, htmlAttributes: new { @class = "form-control textData" })
-        </div>
+            <div class="form-group">
+                <label class="control-label">Tax</label>
+                @Html.DropDownList("TaxId", (IEnumerable<SelectListItem>)ViewBag.listTaxes, htmlAttributes: new { @class = "form-control textData" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">DiscountId</label>
+                @Html.DropDownList("DiscountId", (IEnumerable<SelectListItem>)ViewBag.listDiscounts, htmlAttributes: new { @class = "form-control textData" })
+            </div>
 
-        <br />
-        <h4 class="whiteText">Add Product</h4>
-        <hr />
+            <br />
+            <h4 class="whiteText">Add Product</h4>
+            <hr />
 
-        <div id="message"></div>
+            <div id="message"></div>
 
-        <div class="form-group">
-            <label class="control-label">Product</label>
-            @Html.DropDownList("NameProduct", (IEnumerable<SelectListItem>)ViewBag.listproducts, htmlAttributes: new { @class = "form-control textData" })
-        </div>
+            <div class="form-group">
+                <label class="control-label">Product</label>
+                @Html.DropDownList("NameProduct", (IEnumerable<SelectListItem>)ViewBag.listproducts, htmlAttributes: new { @class = "form-control textData" })
+            </div>
 
-        <div class="form-group">
-            <label class="control-label">Amount</label>
-            @Html.DropDownList("Amount", (IEnumerable<SelectListItem>)ViewBag.listAmounts, htmlAttributes: new { @class = "form-control textData" })
-        </div>
-        <br />
+            <div class="form-group">
+                <label class="control-label">Amount</label>
+                @Html.DropDownList("Amount", (IEnumerable<SelectListItem>)ViewBag.listAmounts, htmlAttributes: new { @class = "form-control textData" })
+            </div>
+            <br />
 
-        <div align="center">
-            <button id="add" class="btn btn-primary">Add Product</button>
-        </div>
+            <div align="center">
+                <button id="add" class="btn btn-primary">Add Product</button>
+            </div>
 
-        <br />
+            <br />
 
-        <div id="AddProducts">
+            <div id="AddProducts">
 
-            @if (Model.BillDetails != null)
-            {
-                @foreach (var item in Model.BillDetails)
+                @if (Model.BillDetails != null)
                 {
-                    <button onclick="Delete(this)" class="btn btn-success ListProduct" id="@item.ProductId">
-                        @item.NameProduct @item.Amount | <i class="fa fa-times ListAmount" id="@item.Amount"> </i>
-                    </button>
+                    @foreach (var item in Model.BillDetails)
+                    {
+                        <button onclick="Delete(this)" class="btn btn-success ListProduct" id="@item.ProductId">
+                            @item.NameProduct @item.Amount | <i class="fa fa-times ListAmount" id="@item.Amount"> </i>
+                        </button>
+                    }
                 }
-            }
 
+            </div>
+
+            <br />
+
+            <div align="center">
+                <button id="save" class="btn btn-primary">@ViewBag.save</button>
+            </div>
         </div>
 
         <br />
 
-        <div align="center">
-            <button id="save" class="btn btn-primary">@ViewBag.save</button>
-        </div>
-
-        <br />
+       <div id="messageSuccess"></div>
 
         <div align="center">
             <form asp-action="Home">
@@ -150,10 +154,19 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(data) {
-                    alert('In Ajax');
-                },       
-                error: function () {  
-                    alert('error');     
+                    if(data){
+                        $('#SaveDate').hide();
+                        $('#messageSuccess').append('<div class="alert alert-success" align="center">Information saved successfully</div >');
+                    }
+                    else{
+                        $('#SaveDate').hide();
+                        $('#messageSuccess').append('<div class="alert alert-danger" align="center">Information was not saved</div >');
+                    }
+
+                },
+                error: function () {
+                    $('#message').append('<div class="alert alert-danger" align="center">Error saved invoce</div >');
+                    $('#message').delay(4000).fadeOut("slow");
                 }
 
             });
