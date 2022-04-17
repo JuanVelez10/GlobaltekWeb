@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Domain.Dtos;
 using Domain.References;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,12 +13,19 @@ namespace Web.Controllers
         private readonly ILogger<GlobaltekController> _logger;
         private readonly IBillServices billServices;
         private readonly IPersonServices personServices;
+        private readonly IDiscountServices discountServices;
+        private readonly ITaxServices taxServices;
+        private readonly IProductServices productServices;
 
-        public GlobaltekController(ILogger<GlobaltekController> logger, IBillServices billServices, IPersonServices personServices)
+        public GlobaltekController(ILogger<GlobaltekController> logger, IBillServices billServices, IPersonServices personServices,
+            IDiscountServices discountServices, ITaxServices taxServices, IProductServices productServices)
         {
             _logger = logger;
             this.billServices = billServices;
             this.personServices = personServices;
+            this.discountServices = discountServices;
+            this.taxServices = taxServices;
+            this.productServices = productServices;
         }
 
         public IActionResult Login(string loginError)
@@ -60,30 +68,41 @@ namespace Web.Controllers
             return View(billInfo);
         }
 
-        public IActionResult Edit(Guid? id)
+        [HttpPost]
+        public IActionResult SaveInfo([FromBody] BillInfo BillInfo)
         {
-            var session = Session();
-            if (string.IsNullOrEmpty(session)) return ReturnLogin("You are not logged in");
-            var billInfo = billServices.GetBillInfo(session, id);
-            return View(billInfo);
-        }
-
-        public IActionResult Create()
-        {
-            var session = Session();
-            if (string.IsNullOrEmpty(session)) return ReturnLogin("You are not logged in");
-
-            List<SelectListItem> listPaymentType = new List<SelectListItem>();
-            foreach (int item in Enum.GetValues(typeof(PaymentType)))
-            {
-                listPaymentType.Add(new SelectListItem { Value = ((int)item).ToString(), Text = Enum.ToObject(typeof(PaymentType), (int)item).ToString() });
-            }
-            ViewBag.listPaymentType = listPaymentType;
-
-
-
 
             return View();
+        }
+
+        public IActionResult Save(Guid? id,bool update)
+        {
+            var session = Session();
+            if (string.IsNullOrEmpty(session)) return ReturnLogin("You are not logged in");
+
+            var billInfo = new BillInfo();
+            billInfo.Date = DateTime.Now;
+
+            if (update)
+            {
+                ViewBag.save = "Edit Invoice";
+                ViewBag.hide = "";
+                billInfo = billServices.GetBillInfo(session, id);
+            }
+            else
+            {
+                ViewBag.save = "Create Invoice";
+                ViewBag.hide = "Hide";
+            }
+
+            ViewBag.listPaymentType = ListPaymentType();
+            ViewBag.listPerson = new SelectList(personServices.GetAll(session),"Id", "Name");
+            ViewBag.listTaxes = new SelectList(taxServices.GetAll(session), "Id", "Name");
+            ViewBag.listDiscounts = new SelectList(discountServices.GetAll(session), "Id", "Name");
+            ViewBag.listproducts = new SelectList(productServices.GetAll(session), "Id", "Name");
+            ViewBag.listAmounts = ListAmount();
+
+            return View(billInfo);
         }
 
         public IActionResult Delete(Guid? id)
@@ -103,6 +122,26 @@ namespace Web.Controllers
         private string Session()
         {
            return ControllerContext.HttpContext.Request.Cookies.Where(x => x.Key == "token").FirstOrDefault().Value;
+        }
+
+        private List<SelectListItem> ListAmount()
+        {
+            List<SelectListItem> listAmounts = new List<SelectListItem>();
+            for (int i=1; i <= 10;i++)
+            {
+                listAmounts.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
+            }
+            return listAmounts;
+        }
+
+        private List<SelectListItem> ListPaymentType()
+        {
+            List<SelectListItem> listPaymentType = new List<SelectListItem>();
+            foreach (int item in Enum.GetValues(typeof(PaymentType)))
+            {
+                listPaymentType.Add(new SelectListItem { Value = ((int)item).ToString(), Text = Enum.ToObject(typeof(PaymentType), (int)item).ToString() });
+            }
+            return listPaymentType;
         }
 
 

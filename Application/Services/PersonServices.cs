@@ -2,13 +2,7 @@
 using Domain.Dtos;
 using Domain.Entities;
 using Domain.References;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Domain.Enums.Enums;
 
 namespace Application.Services
@@ -16,11 +10,9 @@ namespace Application.Services
     public  class PersonServices: IPersonServices
     {
         private readonly IApiServices apiServices;
-        private readonly ILogger<PersonServices> _logger;
 
-        public PersonServices(IApiServices apiServices, ILogger<PersonServices> logger)
+        public PersonServices(IApiServices apiServices)
         {
-            _logger = logger;
             this.apiServices = apiServices;
         }
 
