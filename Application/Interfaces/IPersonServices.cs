@@ -1,4 +1,5 @@
-﻿using Domain.References;
+﻿using Domain.Dtos;
+using Domain.References;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Application.Interfaces
 {
     public interface IPersonServices
     {
-        string VefirySession(LoginRequest loginRequest);
+        BaseResponse<Login> VefirySession(LoginRequest loginRequest);
     }
 }

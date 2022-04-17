@@ -12,7 +12,6 @@ namespace Domain.Dtos
     public class BillInfo
     {
 
-        [Required]
         public Guid? Id { get; set; }
 
         [Required]

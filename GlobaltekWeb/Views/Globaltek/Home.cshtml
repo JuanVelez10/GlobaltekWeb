@@ -4,62 +4,55 @@
     ViewData["Title"] = "Home";
 }
 
+<div class="row" align="center">
+    <div class="col-md-3"></div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <div class="col-md-6">
+        <img src="/image/Logo.png" class="Logo">
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Number)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NameClient)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameClient)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
+    <div class="col-md-3">
+        <a asp-action="Login" class="Salir">
+            <img src="/image/salir.png" class="ImageSalir" />
+        </a>
+    </div>
+
+</div>
+
+<br />
+<br />
+
+<div align="center">
+    <form asp-action="Create">
+        <input align="center" type="submit" value="Create new" class="btn btn-success" />
+    </form>
+</div>
+
+<br/>
+
+<div class="row" align="center">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-md-4" id="@item.Id">
+
+            <div class="panel blue" >
+                <h6 class="col-md-12"> <B>Number:</B> @item.Number</h6>
+            </div>
+
+            <div class="panel white">
+                <h6 class="col-md-12"> <B>Date:</B> @item.Date</h6>
+                <h6 class="col-md-12"> <B>Person:</B> @item.NameClient</h6>
+                <h6 class="col-md-12"> <B>Total:</B> @item.Total</h6>
+
+
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+            </div>
+
+        </div>
+
+    }
+</div>

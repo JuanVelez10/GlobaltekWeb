@@ -1,8 +1,9 @@
 ﻿@model Domain.Dtos.BillInfo
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
+
 
 <div class="row">
 
@@ -13,7 +14,7 @@
         <img src="/image/Logo.png" class="Logo">
 
         <div class="white panel">
-            <h4>Invoce</h4>
+            <h3 align="center">¿Are you sure you want to delete this invoce?</h3>
             <hr />
 
             <dl class="row">
@@ -92,34 +93,23 @@
                     @Html.DisplayFor(model => model.Total)
                 </dd>
             </dl>
-
-            <h4>Details</h4>
-            <hr />
-
-            @if (Model.BillDetails != null)
-            {
-                @foreach (var item in Model.BillDetails)
-                {
-                    <h5>Product</h5>
-                    <dl class="row">
-
-                        <dd class="col-sm-12">
-                            <b>@Html.DisplayName(item.NameProduct) </b> x @Html.DisplayName(item.Amount.ToString()) <b>Unit</b> $ @Html.DisplayName(item.UnitCost.ToString())
-                        </dd>
-
-                    </dl>
-                }
-            }
         </div>
 
-        <br />
+
         <div align="center">
+            <br/>
+            <form asp-action="Delete">
+                <input align="center" type="submit" value="Delete" class="btn btn-danger" />
+            </form>
+            <br />
             <form asp-action="Home">
                 <input align="center" type="submit" value="Back" class="btn btn-success" />
             </form>
         </div>
+
     </div>
 
     <div class="col-md-4"></div>
 
 </div>
+
