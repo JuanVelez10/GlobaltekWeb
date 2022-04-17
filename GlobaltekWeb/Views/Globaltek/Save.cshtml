@@ -188,6 +188,7 @@
         billInfo.DiscountTotal = @Model.DiscountTotal;
         billInfo.TaxTotal = @Model.TaxTotal;
         billInfo.Total = @Model.Total;
+        billInfo.Update= @ViewBag.update;
 
         billInfo.Date = document.getElementById("Date").value.replace(/^(0+)/g, '');
         billInfo.PaymentType = document.getElementById("PaymentType").value;

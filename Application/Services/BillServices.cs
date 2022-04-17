@@ -23,12 +23,23 @@ namespace Application.Services
 
         public List<BillBasic> GetAllBill(string token)
         {
-            return JsonConvert.DeserializeObject<List<BillBasic>>(apiServices.ApiGet(token, "Bill"));
+            return JsonConvert.DeserializeObject<List<BillBasic>>(apiServices.ApiGet("Bill", token));
         }
 
         public BillInfo GetBillInfo(string token, Guid? id)
         {
-            return JsonConvert.DeserializeObject<BillInfo>(apiServices.ApiGet(token, "Bill/" + id));
+            return JsonConvert.DeserializeObject<BillInfo>(apiServices.ApiGet("Bill/" + id, token));
+        }
+
+        public bool SaveInfo(string token, BillInfo billInfo)
+        {
+            var save = false;
+            BaseResponse<bool> baseResponse;
+            if (billInfo == null) return save;
+            var json = JsonConvert.SerializeObject(billInfo);
+            if (billInfo.Update) baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiPut(json,"Bill", token));
+            else baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiPost(json,"Bill",token));
+            return baseResponse.Data;
         }
 
     }

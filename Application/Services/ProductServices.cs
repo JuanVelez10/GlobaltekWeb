@@ -20,7 +20,7 @@ namespace Application.Services
 
         public List<Product> GetAll(string token)
         {
-            return JsonConvert.DeserializeObject<List<Product>>(apiServices.ApiGet(token, "Product"));
+            return JsonConvert.DeserializeObject<List<Product>>(apiServices.ApiGet("Product", token));
         }
 
     }

@@ -38,7 +38,7 @@ namespace Application.Services
 
         public List<Person> GetAll(string token)
         {
-            return JsonConvert.DeserializeObject<List<Person>>(apiServices.ApiGet(token, "Person"));
+            return JsonConvert.DeserializeObject<List<Person>>(apiServices.ApiGet("Person", token));
         }
 
 

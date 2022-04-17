@@ -50,6 +50,7 @@ namespace Domain.Dtos
         [Required]
         public Guid? DiscountId { get; set; }
 
+        public bool Update { get; set; }
         public string NamePerson { get; set; }
         public string DocumenPerson { get; set; }
         public Tax? Tax { get; set; }

@@ -71,8 +71,9 @@ namespace Web.Controllers
         [HttpPost]
         public bool SaveInfo([FromBody] BillInfo billInfo)
         {
-
-            return true;
+            var session = Session();
+            if (string.IsNullOrEmpty(session)) return false;
+            return billServices.SaveInfo(session, billInfo);
         }
 
         public IActionResult Save(Guid? id,bool update)
@@ -86,12 +87,14 @@ namespace Web.Controllers
             {
                 ViewBag.save = "Edit Invoice";
                 ViewBag.hide = "";
+                ViewBag.update = true;
                 billInfo = billServices.GetBillInfo(session, id);
             }
             else
             {
                 ViewBag.save = "Create Invoice";
                 ViewBag.hide = "Hide";
+                ViewBag.update = false;
             }
 
             ViewBag.listPaymentType = ListPaymentType();
