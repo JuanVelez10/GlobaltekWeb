@@ -27,7 +27,7 @@
 
         <div class="form-group">
             <label class="control-label">Date</label>
-            <input id="Date" type="date" class="form-control textData" min="@DateTime.Now.ToString("yyyyy-MM-dd")" />
+            <input id="Date" type="date" class="form-control textData" min="@DateTime.Now.ToString("yyyyy-MM-dd")" value="@DateTime.Now.ToString("yyyyy-MM-dd")" />
         </div>
 
         <div class="form-group">
@@ -41,11 +41,11 @@
         </div>
 
         <div class="form-group">
-            <label id="TaxId" class="control-label">Tax</label>
+            <label class="control-label">Tax</label>
             @Html.DropDownList("TaxId", (IEnumerable<SelectListItem>)ViewBag.listTaxes, htmlAttributes: new { @class = "form-control textData" })
         </div>
         <div class="form-group">
-            <label id="DiscountId" class="control-label">DiscountId</label>
+            <label class="control-label">DiscountId</label>
             @Html.DropDownList("DiscountId", (IEnumerable<SelectListItem>)ViewBag.listDiscounts, htmlAttributes: new { @class = "form-control textData" })
         </div>
 
@@ -114,90 +114,97 @@
 }
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    $('#add').button().click(function () {
-        $('#message div').remove();
-        $('#message').show();
-        var exitsProducts = document.getElementById($('#NameProduct').val());
-        if (exitsProducts == null) {
-            $('#AddProducts').append('<button onclick="Delete(this)" class="btn btn-success ListProduct" id="' + $('#NameProduct').val() + '">'
-            + $('#NameProduct option:selected').text() +' '+ $('#Amount option:selected').text() +' | '
-            + '<i class="fa fa-times ListAmount" id="' + $('#Amount').val() + '"></i>'
-            + '</button>');
-        } else {
-            $('#message').append('<div class="alert alert-danger" align="center">The product already exists </div >');
-            $('#message').delay(4000).fadeOut("slow");
-        }
+        $('#add').button().click(function () {
+            $('#message div').remove();
+            $('#message').show();
+            var exitsProducts = document.getElementById($('#NameProduct').val());
+            if (exitsProducts == null) {
+                $('#AddProducts').append('<button onclick="Delete(this)" class="btn btn-success ListProduct" id="' + $('#NameProduct').val() + '">'
+                + $('#NameProduct option:selected').text() +' '+ $('#Amount option:selected').text() +' | '
+                + '<i class="fa fa-times ListAmount" id="' + $('#Amount').val() + '"></i>'
+                + '</button>');
+            } else {
+                $('#message').append('<div class="alert alert-danger" align="center">The product already exists </div >');
+                $('#message').delay(4000).fadeOut("slow");
+            }
 
-        document.getElementById('NameProduct').options.selectedIndex = 0;
-        document.getElementById('Amount').options.selectedIndex = 0;
-    });
+            document.getElementById('NameProduct').options.selectedIndex = 0;
+            document.getElementById('Amount').options.selectedIndex = 0;
+        });
 
-    $('#save').button().click(function () {
-        $('#message div').remove();
-        $('#message').show();
+        $('#save').button().click(function () {
+            $('#message div').remove();
+            $('#message').show();
 
-        var exitsProducts = document.getElementsByClassName('ListProduct');
+            var exitsProducts = document.getElementsByClassName('ListProduct');
 
-        if (exitsProducts.length > 0) {
-
-            alert(CreateBillInfo().Number);
+            if (exitsProducts.length > 0) {
 
             $.ajax({
-                url: "/Globaltek/SaveInfo",
                 type: "POST",
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({
-                    BillInfo:CreateBillInfo()
-                }),
-                success: function (data) {
-
-                },
-                error: function () {
-                    alert('error');
+                url: '/Globaltek/SaveInfo',
+                data: JSON.stringify(CreateBillInfo()),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    alert('In Ajax');
+                },       
+                error: function () {  
+                    alert('error');     
                 }
+
             });
 
-        } else {
-            $('#message').append('<div class="alert alert-danger" align="center">There must be at least one product </div >');
-            $('#message').delay(4000).fadeOut("slow");
-        }
+            } else {
+                $('#message').append('<div class="alert alert-danger" align="center">There must be at least one product </div >');
+                $('#message').delay(4000).fadeOut("slow");
+            }
+        });
 
     });
 
-});
+
+    function CreateBillInfo() {
+        var billInfo = {};
+        billInfo.Id = '@Model.Id';
+        billInfo.Number = @Model.Number;
+        billInfo.SubTotal = @Model.SubTotal;
+        billInfo.DiscountTotal = @Model.DiscountTotal;
+        billInfo.TaxTotal = @Model.TaxTotal;
+        billInfo.Total = @Model.Total;
+
+        billInfo.Date = document.getElementById("Date").value.replace(/^(0+)/g, '');
+        billInfo.PaymentType = document.getElementById("PaymentType").value;
+        billInfo.PersonId =  document.getElementById("PersonId").value;
+        billInfo.TaxId =  document.getElementById("TaxId").value;
+        billInfo.DiscountId =  document.getElementById("DiscountId").value;
 
 
-function CreateBillInfo() {
-    var BillInfo = {};
-    BillInfo.Id = '@Model.Id.ToString()';
-    BillInfo.Number = @Model.Number;
-    BillInfo.SubTotal = @Model.SubTotal;
-    BillInfo.DiscountTotal = @Model.DiscountTotal;
-    BillInfo.TaxTotal = @Model.TaxTotal;
-    BillInfo.Total = @Model.Total;
-    BillInfo.Date = $('#Date').text();
-    BillInfo.PaymentType = $("#PaymentType").val();
-    BillInfo.PersonId = $("#PersonId").val();
-    BillInfo.TaxId = $("#TaxId").val();
-    BillInfo.DiscountId = $("#DiscountId").val();
-    BillInfo.NamePerson = '';
-    BillInfo.DocumenPerson ='';
-    BillInfo.Tax = null;
-    BillInfo.Discount = null;
-    BillInfo.BillDetailInfo=null;
+        var BillDetails = [];
 
-    return BillInfo;
-}
+        var products = document.getElementsByClassName('ListProduct');
+        var amounts = document.getElementsByClassName('ListAmount');
 
-function Delete(elem) {
-  elem.remove();
-}
+        if(products.length > 0){
+
+            for (var i = 0; i < products.length; i++) {
+                var BillDetailInfo = {};
+                BillDetailInfo.ProductId = products[i].getAttribute("id");
+                BillDetailInfo.Amount = amounts[i].getAttribute("id");
+                BillDetails.push(BillDetailInfo);
+            }
+        }
+
+        billInfo.BillDetails = BillDetails;
+
+        return billInfo;
+    }
+
+    function Delete(elem) {
+      elem.remove();
+    }
 
 </script>

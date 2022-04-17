@@ -69,10 +69,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveInfo([FromBody] BillInfo BillInfo)
+        public bool SaveInfo([FromBody] BillInfo billInfo)
         {
 
-            return View();
+            return true;
         }
 
         public IActionResult Save(Guid? id,bool update)
@@ -81,7 +81,6 @@ namespace Web.Controllers
             if (string.IsNullOrEmpty(session)) return ReturnLogin("You are not logged in");
 
             var billInfo = new BillInfo();
-            billInfo.Date = DateTime.Now;
 
             if (update)
             {

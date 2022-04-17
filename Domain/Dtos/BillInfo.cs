@@ -23,7 +23,7 @@ namespace Domain.Dtos
         public DateTime Date { get; set; }
 
         [Required]
-        public PaymentType PaymentType { get; set; }
+        public int PaymentType { get; set; }
 
         [Required]
         [DataType(DataType.Currency)]
