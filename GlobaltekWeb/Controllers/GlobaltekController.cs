@@ -87,14 +87,14 @@ namespace Web.Controllers
             {
                 ViewBag.save = "Edit Invoice";
                 ViewBag.hide = "";
-                ViewBag.update = true;
                 billInfo = billServices.GetBillInfo(session, id);
+                billInfo.Update = true;
             }
             else
             {
                 ViewBag.save = "Create Invoice";
                 ViewBag.hide = "Hide";
-                ViewBag.update = false;
+                billInfo.Id = new Guid(); 
             }
 
             ViewBag.listPaymentType = ListPaymentType();

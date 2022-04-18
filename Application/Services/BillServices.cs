@@ -36,9 +36,29 @@ namespace Application.Services
             var save = false;
             BaseResponse<bool> baseResponse;
             if (billInfo == null) return save;
+
+            billInfo.NamePerson = string.Empty;
+            billInfo.DocumenPerson = string.Empty;
+
+            foreach (var details in billInfo.BillDetails)
+            {
+                details.Id = new Guid();
+                details.BillId = new Guid();
+                details.NameProduct = string.Empty;
+            }
+
             var json = JsonConvert.SerializeObject(billInfo);
-            if (billInfo.Update) baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiPut(json,"Bill", token));
-            else baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiPost(json,"Bill",token));
+            try
+            {
+                if (billInfo.Update) baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiPut(json, "Bill", token));
+                else baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiPost(json, "Bill", token));
+            }
+            catch
+            {
+               return false;
+            }
+
+
             return baseResponse.Data;
         }
 

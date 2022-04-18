@@ -80,7 +80,7 @@
                     @foreach (var item in Model.BillDetails)
                     {
                         <button onclick="Delete(this)" class="btn btn-success ListProduct" id="@item.ProductId">
-                            @item.NameProduct @item.Amount | <i class="fa fa-times ListAmount" id="@item.Amount"> </i>
+                            @item.NameProduct @item.Amount <i class="fa fa-times ListAmount" id="@item.Amount"> </i>
                         </button>
                     }
                 }
@@ -127,7 +127,7 @@
             var exitsProducts = document.getElementById($('#NameProduct').val());
             if (exitsProducts == null) {
                 $('#AddProducts').append('<button onclick="Delete(this)" class="btn btn-success ListProduct" id="' + $('#NameProduct').val() + '">'
-                + $('#NameProduct option:selected').text() +' '+ $('#Amount option:selected').text() +' | '
+                + $('#NameProduct option:selected').text() +' '+ $('#Amount option:selected').text() +' '
                 + '<i class="fa fa-times ListAmount" id="' + $('#Amount').val() + '"></i>'
                 + '</button>');
             } else {
@@ -188,7 +188,7 @@
         billInfo.DiscountTotal = @Model.DiscountTotal;
         billInfo.TaxTotal = @Model.TaxTotal;
         billInfo.Total = @Model.Total;
-        billInfo.Update= @ViewBag.update;
+        billInfo.Update= @Model.Update.ToString().ToLower() ;
 
         billInfo.Date = document.getElementById("Date").value.replace(/^(0+)/g, '');
         billInfo.PaymentType = document.getElementById("PaymentType").value;
