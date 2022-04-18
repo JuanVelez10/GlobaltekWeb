@@ -8,9 +8,9 @@ namespace Application.Interfaces
 {
     public interface IApiServices
     {
-        string ApiPost(string json, string url, string token = null);
-        string ApiPut(string json, string url, string token = null);
-        string ApiGet(string url, string token = null);
-
+        string ApiPost(string json, string service, string token = null);
+        string ApiPut(string json, string service, string token = null);
+        string ApiGet(string service, string token = null);
+        string ApiDelete(string service, string token = null);
     }
 }

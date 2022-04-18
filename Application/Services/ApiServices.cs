@@ -55,5 +55,15 @@ namespace Application.Services
             return result.Result;
         }
 
+        public string ApiDelete(string service, string token = null)
+        {
+            using var client = new HttpClient();
+
+            if (!string.IsNullOrEmpty(token)) client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+            var response = client.DeleteAsync(api.Url + service).Result;
+            var result = response.Content.ReadAsStringAsync();
+            return result.Result;
+        }
     }
 }

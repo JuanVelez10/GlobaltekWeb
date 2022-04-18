@@ -9,5 +9,6 @@ namespace Application.Interfaces
         List<BillBasic> GetAllBill(string token);
         BillInfo GetBillInfo(string token, Guid? id);
         bool SaveInfo(string token, BillInfo billInfo);
+        bool DeleteInfo(string token, Guid? id);
     }
 }

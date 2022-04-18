@@ -115,6 +115,14 @@ namespace Web.Controllers
             return View(billInfo);
         }
 
+        public IActionResult DeleteInfo(Guid? id)
+        {
+            var session = Session();
+            if (string.IsNullOrEmpty(session)) return ReturnLogin("You are not logged in");
+            var billInfo = billServices.DeleteInfo(session, id);
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -33,9 +33,8 @@ namespace Application.Services
 
         public bool SaveInfo(string token, BillInfo billInfo)
         {
-            var save = false;
             BaseResponse<bool> baseResponse;
-            if (billInfo == null) return save;
+            if (billInfo == null) return false;
 
             billInfo.NamePerson = string.Empty;
             billInfo.DocumenPerson = string.Empty;
@@ -62,5 +61,11 @@ namespace Application.Services
             return baseResponse.Data;
         }
 
+        public bool DeleteInfo(string token, Guid? id)
+        {
+            BaseResponse<bool> baseResponse;
+            baseResponse = JsonConvert.DeserializeObject<BaseResponse<bool>>(apiServices.ApiDelete("Bill/" + id, token));
+            return baseResponse.Data;
+        }
     }
 }

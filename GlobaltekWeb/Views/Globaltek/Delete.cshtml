@@ -98,7 +98,8 @@
 
         <div align="center">
             <br/>
-            <form asp-action="Delete">
+            <form asp-action="DeleteInfo">
+                <input asp-for="@Model.Id" value="@Model.Id" class="Hide" />
                 <input align="center" type="submit" value="Delete" class="btn btn-danger" />
             </form>
             <br />
